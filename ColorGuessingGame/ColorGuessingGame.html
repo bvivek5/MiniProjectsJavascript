@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<head>
+<script>
+var colors;
+var randomNumber;
+var randomColorChosen;
+var colorEnteredByUser;
+var numberOfGuesses = 0;
+var gameOver = false;
+function play_game() {
+  initializeColorArray();
+  choose_a_RandomNumber();
+  chooseTheColorBasedOnRandomNumber();
+  while(!gameOver) {
+     displayInitialMessage();
+     checkTheGuessedColor();
+  }
+}
+
+function checkTheGuessedColor() {
+  var colorPresent = false;
+  for(var index = 0; index < 10; index++) {
+    if(colorEnteredByUser == colors[index])
+       colorPresent = true;
+  }
+  if(!colorPresent) {
+     alert("Sorry, I didn't recognize your color.\n Please try again");
+  } else if(colorEnteredByUser == randomColorChosen) {
+     gameOver = true;
+document.body.style.background = colorEnteredByUser;
+     alert("Congratulations! You have guessed the color!\n It took you "+numberOfGuesses+" guesses to finish the game.\n You can see the color in background");
+  } else if(colorEnteredByUser.localeCompare(randomColorChosen) < 0) {
+    alert("Sorry, your guess is not correct.\n Hint: your color is alphabetically lower than mine.\n Please tryy again.");
+  } else {
+    alert("Sorry, your guess is not correct.\n Hint: your color is alphabetically higher than mine.\n Please try again.");
+  }
+}
+
+function chooseTheColorBasedOnRandomNumber() {
+  randomColorChosen = colors[randomNumber];
+}
+
+function choose_a_RandomNumber() {
+   randomNumber = Math.floor(Math.random() * 10);
+}
+
+function initializeColorArray() {
+colors = 
+["blue","cyan","gold","gray","green","magneta","orange","red","white",
+"yellow"];
+}
+
+function displayInitialMessage() {
+   numberOfGuesses++;
+   colorEnteredByUser = prompt("I am thinking of one of those colors:\n\n blue cyan gold gray green magneta orange red white yellow\n\n What color am I thinking of?");
+
+}
+</script>
+</head>
+<html>
+<body onload = "play_game()">
+</body>
+</html> 
+
