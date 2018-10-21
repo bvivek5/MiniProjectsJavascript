@@ -3,6 +3,11 @@
     <head>
         <title>Task List (Local Storage)</title>
         <style>
+            .completed {
+                color: blue;
+                text-decoration: line-through;
+                font-weight: bold;
+            }
         </style>
     </head>
     
@@ -45,8 +50,10 @@
 
             function displayTasks() {
                 let taskList = todos.map(function(tasks, index) {
+                    let complete = tasks.completed ? 'completed' : '';
                     return '<li>' +
-                            '<div index = ' + index + '>' +
+                            '<div data-index = ' + index + 
+                            ' class = "'+ complete +'">' +
                             tasks.taskAdded +
                             '</div>' +
                             '</li>'
@@ -56,8 +63,13 @@
                 tasks.innerHTML = taskList.join("");
             }
 
-            function completeTask() {
-
+            function completeTask(event) {
+                //console.log(event);
+                const element = event.target;
+                const index = element.dataset.index;
+                element.classList.toggle('completed');
+                todos[index].completed = !todos[index].completed;
+                //console.log(element);
             }
         </script>
     </body>
