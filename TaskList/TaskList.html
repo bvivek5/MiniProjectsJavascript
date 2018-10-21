@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Task List (Local Storage)</title>
+        <style>
+        </style>
+    </head>
+    
+    <body>
+        <div class="container">
+            <ul class="tasks">
+                <li>Task List</li>
+            </ul>
+            <form class="tasksAdded">
+                <input type="text" placeholder="Enter a task" name="task" required/>
+                <input type="submit" value = "Add Task"/>
+            </form>
+        </div>
+        <script>
+            const tasksAdded = document.querySelector('.tasksAdded');
+            const tasks = document.querySelector(".tasks");
+
+            tasksAdded.addEventListener('submit', addTask);
+            tasks.addEventListener('click', completeTask);
+
+            let todos = [];
+
+            function addTask(event) {
+                event.preventDefault();
+                const taskAdded = this.querySelector("[name=task]").value; // this refers to the form element
+                console.log(taskAdded);
+                const task = {
+                    taskAdded,
+                    completed : false
+                }
+                todos.push(task);
+                console.log(todos);
+                this.reset();
+            }
+
+            function completeTask() {
+
+            }
+        </script>
+    </body>
+</html>
