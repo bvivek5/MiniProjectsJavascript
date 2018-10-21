@@ -9,7 +9,6 @@
     <body>
         <div class="container">
             <ul class="tasks">
-                <li>Task List</li>
             </ul>
             <form class="tasksAdded">
                 <input type="text" placeholder="Enter a task" name="task" required/>
@@ -25,17 +24,36 @@
 
             let todos = [];
 
+            /*
+            this.querySelector("[name=task]") - will give the <input> element
+            this - refers to the form element here
+            reset - clears the content of the form, otherwise the user can keep clicking the submit button
+            */
             function addTask(event) {
                 event.preventDefault();
                 const taskAdded = this.querySelector("[name=task]").value; // this refers to the form element
-                console.log(taskAdded);
+                //console.log(taskAdded);
                 const task = {
                     taskAdded,
                     completed : false
                 }
                 todos.push(task);
-                console.log(todos);
+                displayTasks();
+                //console.log(todos);
                 this.reset();
+            }
+
+            function displayTasks() {
+                let taskList = todos.map(function(tasks, index) {
+                    return '<li>' +
+                            '<div index = ' + index + '>' +
+                            tasks.taskAdded +
+                            '</div>' +
+                            '</li>'
+                            
+                });
+                
+                tasks.innerHTML = taskList.join("");
             }
 
             function completeTask() {
