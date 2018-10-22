@@ -8,6 +8,10 @@
                 text-decoration: line-through;
                 font-weight: bold;
             }
+
+            .remove {
+                color: red;
+            }
         </style>
     </head>
     
@@ -53,10 +57,11 @@
             function displayTasks() {
                 let taskList = todos.map(function(tasks, index) {
                     let complete = tasks.completed ? 'completed' : '';
-                    return '<li>' +
-                            '<div data-index = ' + index + 
+                    return '<li data-index = ' + index +'>' +
+                            '<div ' + 
                             ' class = "'+ complete +'">' +
                             tasks.taskAdded +
+                            '<span class = "remove"> x</span>' +
                             '</div>' +
                             '</li>';
                             
@@ -72,10 +77,20 @@
             function completeTask(event) {
                 //console.log(event);
                 const element = event.target;
-                const index = element.dataset.index;
-                element.classList.toggle('completed');
-                todos[index].completed = !todos[index].completed;
+                const liElement = element.parentElement;
+                //console.log(liElement);
+                if(element.className === 'remove') {
+                    //const index = element.dataset.index;
+                    const index = liElement.parentElement.dataset.index;
+                    todos.splice(index, 1);
+                } else {
+                    element.classList.toggle('completed');
+                    todos[liElement.dataset.index].completed = !todos[liElement.dataset.index].completed;
+                }
+                
+                
                 saveToLocalStorage();
+                displayTasks();
                 //console.log(element);
             }
         </script>
