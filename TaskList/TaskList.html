@@ -27,7 +27,8 @@
             tasksAdded.addEventListener('submit', addTask);
             tasks.addEventListener('click', completeTask);
 
-            let todos = [];
+            let todos = JSON.parse(localStorage.getItem('tasks')) || [];
+            displayTasks();
 
             /*
             this.querySelector("[name=task]") - will give the <input> element
@@ -43,6 +44,7 @@
                     completed : false
                 }
                 todos.push(task);
+                saveToLocalStorage();
                 displayTasks();
                 //console.log(todos);
                 this.reset();
@@ -56,11 +58,15 @@
                             ' class = "'+ complete +'">' +
                             tasks.taskAdded +
                             '</div>' +
-                            '</li>'
+                            '</li>';
                             
                 });
                 
                 tasks.innerHTML = taskList.join("");
+            }
+
+            function saveToLocalStorage() {
+                localStorage.setItem('tasks', JSON.stringify(todos));
             }
 
             function completeTask(event) {
@@ -69,6 +75,7 @@
                 const index = element.dataset.index;
                 element.classList.toggle('completed');
                 todos[index].completed = !todos[index].completed;
+                saveToLocalStorage();
                 //console.log(element);
             }
         </script>
